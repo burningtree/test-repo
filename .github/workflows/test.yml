@@ -59,36 +59,16 @@ jobs:
           tag: ${{ env.tag }}
           message: "Latest release"
           github_token: '${{ secrets.GITHUB_TOKEN }}'
-      - uses: ChanTsune/release-with-commit@v2.8.0
-        id: create_release
+      - run: |
+          cp release.zip pbw-${{ env.entry }}-${{ env.tag }}.zip
+          cp release.tag.gz pbw-${{ env.entry }}-${{ env.tag }}.tag.gz
+      - uses: softprops/action-gh-release@v1
         with:
-          regexp: "(.+)"
-          regexp_options: "us"
-          release_name: "${{ env.tag }}"
           tag_name: "${{ env.tag }}"
+          name: "${{ env.tag }}"
           body: "This is a automated release."
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' # This token is provided by Actions, you do not need to create your own token
-      - name: Upload zip
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./release.zip
-          asset_name: "pbw-${{ env.entry }}-${{ env.tag }}.zip"
-          asset_content_type: application/zip
-      - name: Upload tag+gzip
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./release.tar.gz
-          asset_name: "pbw-${{ env.entry }}-${{ env.tag }}.tar.gz"
-          asset_content_type: application/tar+gzip
-
+          files: |
+            pbw-${{ env.entry }}-${{ env.tag }}.zip
+            pbw-${{ env.entry }}-${{ env.tag }}.tag.gz
