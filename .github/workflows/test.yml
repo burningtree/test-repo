@@ -24,7 +24,7 @@ jobs:
           command: c
           cwd: ./dist
           files: |
-            ./
+            ./pbw-data
           outPath: release.tar.gz
       - id: create_tag
         run: |
