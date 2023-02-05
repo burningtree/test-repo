@@ -22,6 +22,7 @@ jobs:
         with:
           tag: ${{ env.tag }}
           message: "Latest release"
+          github_token: '${{ secrets.GITHUB_TOKEN }}'
       - uses: ChanTsune/release-with-commit@v2.8.0
         with:
           regexp: "(.+)"
