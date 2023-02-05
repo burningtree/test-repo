@@ -1,0 +1,50 @@
+{
+  "$id": "https://data.prgblockweek.com/schema/1/media-partner.json",
+  "type": "object",
+  "title": "Media Partner",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "title": "ID"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]+$"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "description": {
+      "type": "string",
+      "__markdown": true
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "english",
+          "czech",
+          "slovak"
+        ]
+      }
+    },
+    "logo": {
+      "type": "string"
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}

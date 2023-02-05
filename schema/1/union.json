@@ -1,0 +1,47 @@
+{
+  "$id": "https://data.prgblockweek.com/schema/1/union.json",
+  "type": "object",
+  "title": "Event Union",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "title": "Event Union ID"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]+$"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name of Event Union"
+    },
+    "org": {
+      "type": "string",
+      "__markdown": true
+    },
+    "description": {
+      "type": "string",
+      "__markdown": true
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}

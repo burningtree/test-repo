@@ -1,0 +1,276 @@
+{
+  "$id": "https://data.prgblockweek.com/schema/1/event.json",
+  "type": "object",
+  "title": "Event",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "types",
+    "status",
+    "org",
+    "dri",
+    "date"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "title": "Event ID"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]+$"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name of event"
+    },
+    "shortname": {
+      "type": "string",
+      "title": "Short name of event"
+    },
+    "types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "conference",
+          "hackathon",
+          "meetup",
+          "expo",
+          "party",
+          "other"
+        ]
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "idea",
+        "planning",
+        "published"
+      ]
+    },
+    "org": {
+      "type": "string",
+      "title": "Organizator of event",
+      "__markdown": true
+    },
+    "dri": {
+      "type": "string",
+      "title": "Directly responsible individual (Github username)"
+    },
+    "poc": {
+      "type": "string",
+      "title": "A point of contact (POC)"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Start date of event"
+    },
+    "days": {
+      "type": "number",
+      "title": "Days the event lasts"
+    },
+    "times": {
+      "type": "string",
+      "title": "Event times",
+      "pattern": "^\\d{2}:\\d{2}-\\d{2}:\\d{2}$"
+    },
+    "venues": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "venueName": {
+      "type": "string",
+      "title": "Venue name"
+    },
+    "venueAddress": {
+      "type": "string",
+      "title": "Venue address"
+    },
+    "venueUrl": {
+      "type": "string",
+      "title": "Venue map URL",
+      "format": "uri"
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "english",
+          "czech",
+          "slovak"
+        ]
+      }
+    },
+    "attendees": {
+      "type": "number",
+      "title": "Max number of attendees"
+    },
+    "chains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "bitcoin",
+          "ethereum",
+          "cosmos",
+          "polkadot",
+          "monero",
+          "cardano",
+          "other"
+        ]
+      }
+    },
+    "difficulty": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "logo": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "__markdown": true
+    },
+    "hidden": {
+      "type": "boolean"
+    },
+    "cfp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "link"
+      ],
+      "properties": {
+        "link": {
+          "type": "string",
+          "format": "uri"
+        },
+        "deadline": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "sponsors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "link"
+      ],
+      "properties": {
+        "link": {
+          "type": "string",
+          "format": "uri"
+        },
+        "range": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "registration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "tickets",
+            "invites",
+            "signup"
+          ]
+        },
+        "price": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string",
+          "format": "uri"
+        },
+        "button": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "available",
+            "sold-out",
+            "closed"
+          ]
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "date",
+          "times"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "times": {
+            "type": "string",
+            "pattern": "^\\d{2}:\\d{2}-\\d{2}:\\d{2}$"
+          },
+          "ecap": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "venues": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$"
+            }
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "speakers": {
+      "type": "array"
+    }
+  }
+}
