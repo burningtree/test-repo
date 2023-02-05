@@ -1,4 +1,4 @@
-name: Release with commit
+name: Test, build, deploy
 
 env:
   ENTRY: 23
