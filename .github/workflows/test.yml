@@ -46,7 +46,6 @@ jobs:
         with:
           args: unzip -qq release.zip -d unzipped
       - run: ls -R
-        working-directory: unzipped
       - name: Compress action step
         uses: a7ul/tar-action@v1.1.0
         id: compress
