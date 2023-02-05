@@ -22,7 +22,6 @@ jobs:
         with:
           tag: ${{ steps.create_tag.outputs.tag }}
           message: "Latest release"
-    steps:
       - uses: ChanTsune/release-with-commit@v2.8.0
         with:
           regexp: "(.+)"
