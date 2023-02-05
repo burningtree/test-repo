@@ -57,7 +57,7 @@ jobs:
           outPath: "release.tar.gz"
       - uses: rickstaa/action-create-tag@v1
         with:
-          tag: ${{ env.tag }}
+          tag: "${{ env.tag }}"
           message: "Latest release"
           github_token: '${{ secrets.GITHUB_TOKEN }}'
       - run: |
