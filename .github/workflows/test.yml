@@ -71,6 +71,8 @@ jobs:
   deploy_gh_pages:
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - run: "touch dist/CNAME && echo \"${{ env.GH_PAGES_DOMAIN }}\" >> dist/CNAME"
