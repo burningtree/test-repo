@@ -29,9 +29,9 @@ jobs:
         with:
           regexp: "(.+)"
           regexp_options: "us"
-          release_name: "version $tag ${{ env.tag }}"
-          tag_name: $tag
-          body: "$5"
+          release_name: "${{ env.tag }}"
+          tag_name: "${{ env.tag }}"
+          body: "This is a automated release."
           draft: false
           prerelease: false
         env:

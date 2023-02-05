@@ -4,4 +4,4 @@ const p = Deno.run({ cmd: ["git", "tag"], stdout: "piped" });
 const current = String.fromCharCode.apply(null, await p.output()).trim();
 const m = current.match(new RegExp(tag), "g");
 const num = m ? m.length : 0
-console.log(`tag=${tag}.${num}`)
+console.log(`tag=${tag}.r${num}`)
