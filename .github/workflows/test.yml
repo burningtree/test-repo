@@ -26,8 +26,8 @@ jobs:
       - run: "echo \"Builded Tag: ${{ env.tag }}\""
       - run: "pwd; ls -R"
       - uses: montudor/action-zip@v1
-        with:
-          args: "zip -qq -r release.zip dist/${{ env.entry }}"
+      - run: "zip -qq -r ../release.zip ${{ env.entry }}"
+        working-directory: ./dist
       - uses: actions/upload-artifact@v3
         with:
           name: release
