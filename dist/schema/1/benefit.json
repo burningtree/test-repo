@@ -1,0 +1,42 @@
+{
+  "$id": "https://data.prgblockweek.com/schema/1/benefit.json",
+  "type": "object",
+  "title": "Benefit",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "title": "Benefit ID"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]+$"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name of Benefit"
+    },
+    "slogan": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "__markdown": true
+    },
+    "logo": {
+      "type": "string"
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}
