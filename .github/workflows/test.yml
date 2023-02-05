@@ -61,7 +61,7 @@ jobs:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
       - run: |
           cp release.zip pbw-${{ env.entry }}-${{ env.tag }}.zip
-          cp release.tag.gz pbw-${{ env.entry }}-${{ env.tag }}.tag.gz
+          cp release.tar.gz pbw-${{ env.entry }}-${{ env.tag }}.tar.gz
       - uses: softprops/action-gh-release@v1
         with:
           tag_name: "${{ env.tag }}"
@@ -71,4 +71,4 @@ jobs:
           prerelease: false
           files: |
             pbw-${{ env.entry }}-${{ env.tag }}.zip
-            pbw-${{ env.entry }}-${{ env.tag }}.tag.gz
+            pbw-${{ env.entry }}-${{ env.tag }}.tar.gz
