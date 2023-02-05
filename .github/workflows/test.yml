@@ -24,6 +24,7 @@ jobs:
       - id: create_tag
         run: "deno run --allow-run release.js >> $GITHUB_ENV"
       - run: "echo \"Builded Tag: ${{ env.tag }}\""
+      - run: "pwd; ls -R"
       - uses: montudor/action-zip@v1
         with:
           args: "cd dist && zip -qq -r ../release.zip ${{ env.entry }}"
