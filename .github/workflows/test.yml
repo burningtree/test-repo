@@ -22,7 +22,7 @@ jobs:
           command: c
           cwd: ./dist
           files: |
-            ./*
+            *
           outPath: release.tar.gz
       - id: create_tag
         run: |
