@@ -1,7 +1,8 @@
 name: Release with commit
 
 env:
-  entry: 23
+  ENTRY: 23
+  GH_PAGES_DOMAIN: test-gh-actions.arnal.cz
 
 on:
   push:
@@ -12,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ env.tag }}
+      tag: ${{ env.TAG }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -20,14 +21,18 @@ jobs:
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Europe/Prague"
       #
       # <--- TODO put BUILD step, eq. make
       #
+      # - run: make
+      - run: find dist
       - run: "deno run --allow-run release.js >> TAG >> $GITHUB_ENV"
-      - run: "echo \"Builded Tag: ${{ env.tag }}\""
-      #- run: "pwd; ls -R"
+      - run: "echo \"Builded Tag: ${{ env.TAG }}\""
       - uses: montudor/action-zip@v1
-      - run: "zip -qq -r ../release.zip ${{ env.entry }}"
+      - run: "zip -qq -r ../release.zip ${{ env.ENTRY }}"
         working-directory: ./dist
       - uses: actions/upload-artifact@v3
         with:
@@ -41,39 +46,35 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      - run: "echo \"tag=${{ needs.build.outputs.tag }}\" >> $GITHUB_ENV"
-      - run: "echo \"Tag: ${{ env.tag }}\""
+      - run: "echo \"TAG=${{ needs.build.outputs.tag }}\" >> $GITHUB_ENV"
+      - run: "echo \"Tag: ${{ env.TAG }}\""
       - uses: actions/download-artifact@v3
         with:
           name: release
-      - uses: montudor/action-zip@v1
-        with:
-          args: unzip -qq release.zip -d unzipped
-      - run: ls -R
-      - name: Compress action step
-        uses: a7ul/tar-action@v1.1.0
-        id: compress
-        with:
-          command: c
-          cwd: ./unzipped
-          files: |
-            ${{ env.entry }}/
-          outPath: "release.tar.gz"
       - uses: rickstaa/action-create-tag@v1
         with:
-          tag: "${{ env.tag }}"
+          tag: "${{ env.TAG }}"
           message: "Latest release"
           github_token: '${{ secrets.GITHUB_TOKEN }}'
       - run: |
-          cp release.zip pbw-${{ env.entry }}-${{ env.tag }}.zip
-          cp release.tar.gz pbw-${{ env.entry }}-${{ env.tag }}.tar.gz
+          cp release.zip pbw-${{ env.ENTRY }}-${{ env.TAG }}.zip
       - uses: softprops/action-gh-release@v1
         with:
-          tag_name: "${{ env.tag }}"
-          name: "${{ env.tag }}"
+          tag_name: "${{ env.TAG }}"
+          name: "${{ env.TAG }}"
           body: "This is a automated release."
           draft: false
           prerelease: false
           files: |
-            pbw-${{ env.entry }}-${{ env.tag }}.zip
-            pbw-${{ env.entry }}-${{ env.tag }}.tar.gz
+            pbw-${{ env.ENTRY }}-${{ env.TAG }}.zip
+
+  deploy_gh_pages:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: "touch dist/CNAME && echo \"${{ env.GH_PAGES_DOMAIN }}\" >> dist/CNAME"
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
