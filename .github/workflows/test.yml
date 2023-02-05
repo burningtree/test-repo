@@ -11,6 +11,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ env.tag }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -21,10 +23,9 @@ jobs:
       #
       # <--- TODO put BUILD step, eq. make
       #
-      - id: create_tag
-        run: "deno run --allow-run release.js >> $GITHUB_ENV"
+      - run: "deno run --allow-run release.js >> TAG >> $GITHUB_ENV"
       - run: "echo \"Builded Tag: ${{ env.tag }}\""
-      - run: "pwd; ls -R"
+      #- run: "pwd; ls -R"
       - uses: montudor/action-zip@v1
       - run: "zip -qq -r ../release.zip ${{ env.entry }}"
         working-directory: ./dist
@@ -39,6 +40,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - run: "echo \"tag=${{ needs.build.outputs.tag }}\" >> $GITHUB_ENV"
+      - run: "echo \"Tag: ${{ env.tag }}\""
       - uses: actions/download-artifact@v3
         with:
           name: release
